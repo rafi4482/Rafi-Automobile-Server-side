@@ -23,6 +23,19 @@ async function run() {
     const userCollection=client.db('cardb').collection('user')
     console.log("Connected to MongoDB!");
 
+    app.get('/cars', async (req, res) => {
+      const result = await carCollection.find({}).toArray();
+      res.send(result);
+    });
+
+    app.get('/cars/:id',async(req,res)=>{
+      const result=await carCollection.findOne({
+        _id:new ObjectId(req.params.id)
+      })
+     res.send(result)
+    })
+
+
     app.get('/allOrder', async (req, res) => {
       const result = await ordersCollection.find({}).toArray();
       res.send(result);
